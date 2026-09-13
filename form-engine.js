@@ -222,16 +222,19 @@ function downloadText(text, filename) {
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
 
-function buildForm({ formEl, data, title, filenamePrefix }) {
+function buildForm({ formEl, data, title, filenamePrefix, formspreeEndpoint }) {
   data.sections.forEach(sec => renderSection(sec, formEl));
   wireConditionals(formEl);
 
   let lastExport = "";
   let lastFilename = "response.txt";
 
-  formEl.addEventListener("submit", e => {
+  formEl.addEventListener("submit", async e => {
     e.preventDefault();
     if (!formEl.reportValidity()) return;
+
+    const submitBtn = formEl.querySelector('button[type="submit"]');
+    const statusEl = formEl.querySelector(".status");
 
     const nameField = formEl.querySelector('[name="Name"], [name="Business name"], [name="Who\'s filling this out"]');
     const who = nameField && nameField.value ? slug(nameField.value) : "response";
@@ -240,8 +243,31 @@ function buildForm({ formEl, data, title, filenamePrefix }) {
 
     downloadText(lastExport, lastFilename);
 
+    let emailFailed = false;
+    if (formspreeEndpoint) {
+      if (submitBtn) submitBtn.disabled = true;
+      if (statusEl) statusEl.textContent = "Sending…";
+      try {
+        const res = await fetch(formspreeEndpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(formEl),
+        });
+        emailFailed = !res.ok;
+      } catch {
+        emailFailed = true;
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (statusEl) statusEl.textContent = "";
+      }
+    }
+
     formEl.style.display = "none";
     document.getElementById("success").style.display = "block";
+    const emailStatusEl = document.getElementById("email-status");
+    if (emailStatusEl) emailStatusEl.textContent = emailFailed
+      ? "Heads up: the automatic email didn't go through, so please attach and send the downloaded file as a backup."
+      : "";
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     const again = document.getElementById("download-again");

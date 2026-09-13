@@ -15,7 +15,7 @@
   <p>Now the real work starts. This is the document we'll both come back to for the rest of the project — when I'm deciding what a page says, or which of two directions is more <em>you</em>, this is what I check.</p>
   <div class="note" style="margin-top:22px">
     <p>Some of it will be easy. Some of it you may not have answers to yet, and that's useful information on its own — write "not sure" and we'll work it out together. Don't polish. Rough and honest beats tidy and vague.</p>
-    <p>When you submit, your answers download as a text file on your own device — nothing is sent anywhere automatically. Attach that file to an email back to me. Budget 20–40 minutes.</p>
+    <p>When you submit, your answers are sent to me directly and also download as a text file on your own device. Budget 20–40 minutes.</p>
   </div>
 </div>
 
@@ -30,7 +30,8 @@
 
   <div id="success">
     <h2>That's everything.</h2>
-    <p>Your answers just downloaded as a text file. Attach it to an email to <a href="mailto:fkbokovi@gmail.com">fkbokovi@gmail.com</a> and I'll read through it properly before our next call.</p>
+    <p>Your answers were sent over, and a copy also downloaded as a text file for your own records. I'll read through it properly before our next call.</p>
+    <p id="email-status" style="margin-top:8px;color:var(--text-dim)"></p>
     <p style="margin-top:18px"><button id="download-again" class="submit" type="button" style="background:transparent;border:1px solid var(--field-border);color:var(--text-dim)">Download again</button></p>
   </div>
 </div>
@@ -47,6 +48,7 @@
     data: BRIEF_DATA,
     title: "Strategy Brief",
     filenamePrefix: "strategy-brief",
+    formspreeEndpoint: "https://formspree.io/f/xvkojwvg",
   });
 </script>
 </body>

@@ -1,16 +1,19 @@
 # Client Intake Forms
 
-Two static forms, no backend:
+Two static forms:
 
 - **`index.html`** — Project Inquiry. Short, public. Link this from your site.
 - **`strategy-brief.html`** — Strategy Brief. The deep adaptive questionnaire. Don't link it anywhere public — send the URL directly to a client once they've signed.
 
-On submit, each form validates required fields, then generates a plain-text
-summary of the answers and downloads it straight to the visitor's device as a
-`.txt` file (e.g. `project-inquiry-jane-doe-2026-09-13.txt`). Nothing is sent
-over the network — the client attaches that file to an email back to you, or
-you follow up once they send it. If you'd rather have submissions emailed to
-you automatically, see **Going further** below.
+On submit, each form validates required fields, generates a plain-text
+summary of the answers, and downloads it straight to the visitor's device as a
+`.txt` file (e.g. `project-inquiry-jane-doe-2026-09-13.txt`) as a backup copy.
+The answers are also POSTed to a **Formspree** endpoint (configured via
+`formspreeEndpoint` in each HTML file's `buildForm()` call), which emails them
+to you directly — no third-party account needed on the client's end, and no
+custom backend to run. If that request fails for any reason (offline,
+Formspree down), the success screen tells the visitor to send the downloaded
+file as a fallback.
 
 ## Files
 
@@ -63,12 +66,14 @@ needed for day-to-day changes. Each question is one object:
    the same Pages settings and a `CNAME` file — GitHub's docs walk through
    the DNS record.
 
-## Going further
+## Changing the Formspree destination
 
-The text-download approach needs zero setup and zero third-party accounts,
-but it does depend on the client actually emailing you the file. If you'd
-rather have submissions land in your inbox automatically, the smallest add-on
-is a free form backend like **Formspree** or **Web3Forms**: you sign up,
-get an endpoint URL, and swap the download call in `form-engine.js`'s
-`buildForm()` for a `fetch()` POST to that endpoint — happy to wire that up
-whenever you want it.
+Both forms currently point at the same Formspree endpoint. To change where
+submissions get emailed, or to use separate endpoints per form:
+
+1. Sign in at [formspree.io](https://formspree.io), create a form (or open an
+   existing one), and copy its endpoint — `https://formspree.io/f/xxxxxxxx`.
+2. Paste it into the `formspreeEndpoint` value in `index.html` and/or
+   `strategy-brief.html`.
+3. Formspree's free tier caps at 50 submissions/month; upgrade there if you
+   need more.
