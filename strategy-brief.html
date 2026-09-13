@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategy Brief — Fabrice Bokovi</title>
+<meta name="description" content="The deep project questionnaire, sent once a project is underway.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap top">
+  <p class="eyebrow">Fabrice Bokovi &middot; Web Design &amp; Development</p>
+  <h1>Strategy Brief</h1>
+  <p>Now the real work starts. This is the document we'll both come back to for the rest of the project — when I'm deciding what a page says, or which of two directions is more <em>you</em>, this is what I check.</p>
+  <div class="note" style="margin-top:22px">
+    <p>Some of it will be easy. Some of it you may not have answers to yet, and that's useful information on its own — write "not sure" and we'll work it out together. Don't polish. Rough and honest beats tidy and vague.</p>
+    <p>When you submit, your answers download as a text file on your own device — nothing is sent anywhere automatically. Attach that file to an email back to me. Budget 20–40 minutes.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <form id="brief-form">
+    <!-- questions injected by form-engine.js from BRIEF_DATA -->
+    <div class="actions">
+      <button type="submit" class="submit">Download my answers</button>
+      <span class="status"></span>
+    </div>
+  </form>
+
+  <div id="success">
+    <h2>That's everything.</h2>
+    <p>Your answers just downloaded as a text file. Attach it to an email to <a href="mailto:fkbokovi@gmail.com">fkbokovi@gmail.com</a> and I'll read through it properly before our next call.</p>
+    <p style="margin-top:18px"><button id="download-again" class="submit" type="button" style="background:transparent;border:1px solid var(--field-border);color:var(--text-dim)">Download again</button></p>
+  </div>
+</div>
+
+<footer class="wrap">
+  Questions in the meantime? <a href="mailto:fkbokovi@gmail.com">fkbokovi@gmail.com</a>
+</footer>
+
+<script src="form-engine.js"></script>
+<script src="brief-data.js"></script>
+<script>
+  buildForm({
+    formEl: document.getElementById("brief-form"),
+    data: BRIEF_DATA,
+    title: "Strategy Brief",
+    filenamePrefix: "strategy-brief",
+  });
+</script>
+</body>
+</html>

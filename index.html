@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Inquiry — Fabrice Bokovi</title>
+<meta name="description" content="Tell me about your project — a short form to see if we're a fit.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap top">
+  <p class="eyebrow">Fabrice Bokovi &middot; Web Design &amp; Development</p>
+  <h1>Project Inquiry</h1>
+  <p>Tell me about your project. This takes about three minutes and gives me enough to know whether I'm the right fit and what a realistic scope looks like. If it looks like a match, I'll follow up within two business days to set up a call.</p>
+</div>
+
+<div class="wrap">
+  <form id="inquiry-form">
+    <!-- questions injected by form-engine.js from INQUIRY_DATA -->
+    <div class="actions">
+      <button type="submit" class="submit">Send it over</button>
+      <span class="status"></span>
+    </div>
+  </form>
+
+  <div id="success">
+    <h2>Got it — thanks.</h2>
+    <p>Your answers just downloaded as a text file. Attach it to an email to <a href="mailto:fkbokovi@gmail.com">fkbokovi@gmail.com</a> (or I'll follow up once you send it over).</p>
+    <p style="margin-top:18px"><button id="download-again" class="submit" type="button" style="background:transparent;border:1px solid var(--field-border);color:var(--text-dim)">Download again</button></p>
+  </div>
+</div>
+
+<footer class="wrap">
+  Questions in the meantime? <a href="mailto:fkbokovi@gmail.com">fkbokovi@gmail.com</a>
+</footer>
+
+<script src="form-engine.js"></script>
+<script src="inquiry-data.js"></script>
+<script>
+  buildForm({
+    formEl: document.getElementById("inquiry-form"),
+    data: INQUIRY_DATA,
+    title: "Project Inquiry",
+    filenamePrefix: "project-inquiry",
+  });
+</script>
+</body>
+</html>
