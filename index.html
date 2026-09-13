@@ -3,32 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project Inquiry — Fabrice Bokovi</title>
-<meta name="description" content="Tell me about your project — a short form to see if we're a fit.">
+<title>Client Forms &middot; Fabrice Bokovi</title>
+<meta name="description" content="Project inquiry and strategy brief forms.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="wrap top">
   <p class="eyebrow">Fabrice Bokovi &middot; Web Design &amp; Development</p>
-  <h1>Project Inquiry</h1>
-  <p>Tell me about your project. This takes about three minutes and gives me enough to know whether I'm the right fit and what a realistic scope looks like. If it looks like a match, I'll follow up within two business days to set up a call.</p>
+  <h1>Forms</h1>
+  <p>Pick the right one. If you're not sure, start with the Project Inquiry.</p>
 </div>
 
 <div class="wrap">
-  <form id="inquiry-form">
-    <!-- questions injected by form-engine.js from INQUIRY_DATA -->
-    <div class="actions">
-      <button type="submit" class="submit">Send it over</button>
-      <span class="status"></span>
-    </div>
-  </form>
-
-  <div id="success">
-    <h2>Got it — thanks.</h2>
-    <p>Your answers were sent over, and a copy also downloaded as a text file for your own records.</p>
-    <p id="email-status" style="margin-top:8px;color:var(--text-dim)"></p>
-    <p style="margin-top:18px"><button id="download-again" class="submit" type="button" style="background:transparent;border:1px solid var(--field-border);color:var(--text-dim)">Download again</button></p>
+  <div class="hub-links">
+    <a class="hub-link" href="project-inquiry.html">
+      <p class="hub-title">Project Inquiry</p>
+      <p class="hub-desc">Start here. A short form, about three minutes, to see if we're a fit for a new project.</p>
+    </a>
+    <a class="hub-link" href="strategy-brief-business.html">
+      <p class="hub-title">Strategy Brief, Business</p>
+      <p class="hub-desc">The deep questionnaire for a business or brand, sent once a project is underway. Budget 20 to 40 minutes.</p>
+    </a>
+    <a class="hub-link" href="strategy-brief-personal.html">
+      <p class="hub-title">Strategy Brief, Personal Site or Portfolio</p>
+      <p class="hub-desc">A shorter version of the deep questionnaire, trimmed for a personal site or portfolio. Budget 15 to 25 minutes.</p>
+    </a>
   </div>
 </div>
 
@@ -36,16 +36,5 @@
   Questions in the meantime? <a href="mailto:fkbokovi@gmail.com">fkbokovi@gmail.com</a>
 </footer>
 
-<script src="form-engine.js"></script>
-<script src="inquiry-data.js"></script>
-<script>
-  buildForm({
-    formEl: document.getElementById("inquiry-form"),
-    data: INQUIRY_DATA,
-    title: "Project Inquiry",
-    filenamePrefix: "project-inquiry",
-    formspreeEndpoint: "https://formspree.io/f/xvkojwvg",
-  });
-</script>
 </body>
 </html>

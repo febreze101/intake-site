@@ -1,4 +1,4 @@
-const BRIEF_DATA = {
+const BRIEF_DATA_BUSINESS = {
   sections: [
     {
       heading: "Orientation",
@@ -9,7 +9,7 @@ const BRIEF_DATA = {
           options: ["Just me", "Me and one other person", "A few of us are contributing"],
         },
         {
-          id: "s2_scope", name: "Scope", type: "checkbox", label: "Scope confirmation — what are we building?",
+          id: "s2_scope", name: "Scope", type: "checkbox", label: "Scope confirmation: what are we building?",
           help: "This one drives which sections show up below.",
           options: ["Brand identity", "Website or portfolio", "Ecommerce", "Content / copy support"], required: true,
         },
@@ -19,9 +19,9 @@ const BRIEF_DATA = {
       heading: "You & the work",
       questions: [
         { id: "s2_what", name: "What you do", type: "textarea", label: "Describe what you do to someone who's never heard of you.", help: "Plain language. No mission-statement voice. How would you say it to a friend at dinner?", required: true },
-        { id: "s2_sell", name: "What you offer", type: "textarea", label: "What do you actually offer?", help: "Products, services, packages, price points — or, if this is a personal site or portfolio, the kind of work or opportunities you want to attract.", required: true },
+        { id: "s2_sell", name: "What you offer", type: "textarea", label: "What do you actually offer?", help: "Products, services, packages, price points. Or, if this is a personal site or portfolio, the kind of work or opportunities you want to attract.", required: true },
         { id: "s2_revenue_now", name: "Current focus", type: "textarea", label: "Where does most of your revenue, or attention, come from today?", help: "Which product, service, or type of work, and roughly what share. Pre-launch, or not revenue-driven? Say what you expect or hope for instead.", required: true },
-        { id: "s2_revenue_future", name: "Future direction", type: "textarea", label: "What do you want that to be in two years?", help: "The thing you're trying to grow into — a business, a body of work, a reputation.", required: true },
+        { id: "s2_revenue_future", name: "Future direction", type: "textarea", label: "What do you want that to be in two years?", help: "The thing you're trying to grow into: a business, a body of work, a reputation.", required: true },
         {
           id: "s2_findings", name: "How people find you", type: "checkbox", label: "How do people find you right now?",
           options: ["Word of mouth", "Instagram", "TikTok", "Google", "Foot traffic", "Press", "Email list", "Paid ads", "Wholesale", "Events", "LinkedIn / referral network", "We're not really being found"],
@@ -33,11 +33,11 @@ const BRIEF_DATA = {
     {
       heading: "Audience",
       questions: [
-        { id: "s2_customer", name: "Ideal audience", type: "textarea", label: "Describe the person you most want this site to reach, as a specific person, not a demographic.", help: "Not “women 25–40.” What's their life like, what do they care about, where do they already hang out? A client, a customer, an employer, a collaborator — give me someone I could picture.", required: true },
+        { id: "s2_customer", name: "Ideal audience", type: "textarea", label: "Describe the person you most want this site to reach, as a specific person, not a demographic.", help: "Not “women 25–40.” What's their life like, what do they care about, where do they already hang out? A client, a customer, an employer, a collaborator. Give me someone I could picture.", required: true },
         {
           id: "s2_customer_match", name: "Matches reality", type: "radio", label: "Is that who's actually engaging with you today?",
-          options: ["Yes, pretty much", "Partly — there's a gap", "No, we're trying to shift who we attract", "Pre-launch, so this is a guess"],
-          sub: [{ id: "s2_customer_gap", name: "The gap", type: "textarea", label: "Describe the gap.", showIf: "Matches reality:Partly — there's a gap|No, we're trying to shift who we attract" }],
+          options: ["Yes, pretty much", "Partly, there's a gap", "No, we're trying to shift who we attract", "Pre-launch, so this is a guess"],
+          sub: [{ id: "s2_customer_gap", name: "The gap", type: "textarea", label: "Describe the gap.", showIf: "Matches reality:Partly, there's a gap|No, we're trying to shift who we attract" }],
         },
         {
           id: "s2_groups", name: "Distinct audiences", type: "radio", label: "Are there distinct groups you're trying to reach?",
@@ -46,7 +46,7 @@ const BRIEF_DATA = {
         },
         { id: "s2_job", name: "Job to be done", type: "textarea", label: "What is that person actually trying to accomplish when they come to you?", help: "The job they're hiring you (or your work) for.", required: true },
         { id: "s2_hesitate", name: "What makes them hesitate", type: "textarea", label: "What makes them hesitate?", help: "Price, trust, not understanding the process, a bad past experience, not being sure you're the right fit.", required: true },
-        { id: "s2_happy", name: "What people say when it lands", type: "textarea", label: "What do people say when they're happy with your work?", help: "Actual quotes if you have them — reviews, DMs, emails, feedback from a hiring manager or client.", required: true },
+        { id: "s2_happy", name: "What people say when it lands", type: "textarea", label: "What do people say when they're happy with your work?", help: "Actual quotes if you have them: reviews, DMs, emails, feedback from a hiring manager or client.", required: true },
       ],
     },
     {
@@ -81,7 +81,7 @@ const BRIEF_DATA = {
     {
       heading: "Goals & success",
       questions: [
-        { id: "s2_sixmonth", name: "Six-month success", type: "textarea", label: "What has to be true six months after launch for this to have been worth it?", help: "Be specific — “more bookings” is a wish, “our Tuesday nights are full” is a goal.", required: true },
+        { id: "s2_sixmonth", name: "Six-month success", type: "textarea", label: "What has to be true six months after launch for this to have been worth it?", help: "Be specific: “more bookings” is a wish, “our Tuesday nights are full” is a goal.", required: true },
         {
           id: "s2_goal_primary", name: "Primary goal", type: "radio", label: "Primary goal for this project",
           options: ["More inbound leads", "More online sales", "More bookings", "Charge more / attract better-fit clients", "Get hired / land more freelance or job opportunities", "Be taken seriously by a new audience", "Build a personal audience or following", "Reduce admin and repeated explaining", "Support a launch or raise", "Other"],
@@ -131,13 +131,13 @@ const BRIEF_DATA = {
         { id: "s2_visual_admire", name: "Visual references admired", type: "textarea", label: "Brands whose visual world you admire", help: "Three to five, with links, and one line each on what you like." },
         { id: "s2_visual_dislike", name: "Visual dislikes", type: "textarea", label: "Anything you actively dislike?" },
         { id: "s2_moodboard", name: "Mood board link", type: "url", label: "Mood board link", help: "Pinterest, Are.na, Figma, a folder." },
-        { id: "s2_physical", name: "Where the brand lives physically", type: "checkbox", label: "Where does this brand live in the physical world?", options: ["Nowhere — fully digital", "Storefront / interior", "Packaging", "Print", "Signage", "Uniforms / apparel", "Events / markets", "Vehicles"] },
+        { id: "s2_physical", name: "Where the brand lives physically", type: "checkbox", label: "Where does this brand live in the physical world?", options: ["Nowhere, fully digital", "Storefront / interior", "Packaging", "Print", "Signage", "Uniforms / apparel", "Events / markets", "Vehicles"] },
         {
           id: "s2_photography", name: "Photography status", type: "radio", label: "Photography",
           options: ["Strong library", "Some usable, needs more", "Stock only", "Nothing yet"],
           sub: [{ id: "s2_photography_link", name: "Photography link", type: "textarea", label: "Share a link or upload samples.", showIf: "Photography status:Strong library" }],
         },
-        { id: "s2_photo_budget", name: "New photography budget", type: "radio", label: "Do you have budget or plans for new photography?", options: ["Yes, budgeted", "Want to, not budgeted", "No — work with what exists"] },
+        { id: "s2_photo_budget", name: "New photography budget", type: "radio", label: "Do you have budget or plans for new photography?", options: ["Yes, budgeted", "Want to, not budgeted", "No, work with what exists"] },
       ],
     },
 
@@ -176,7 +176,7 @@ const BRIEF_DATA = {
       showIf: "Scope:Ecommerce",
       questions: [
         { id: "s2_ecom_count", name: "Products at launch", type: "number", label: "How many products at launch?" },
-        { id: "s2_ecom_change", name: "Catalog change frequency", type: "radio", label: "How often does the catalog change?", options: ["Rarely — a stable core", "Seasonally", "Monthly", "Constantly / made-to-order"] },
+        { id: "s2_ecom_change", name: "Catalog change frequency", type: "radio", label: "How often does the catalog change?", options: ["Rarely, a stable core", "Seasonally", "Monthly", "Constantly / made-to-order"] },
         { id: "s2_ecom_variants", name: "Product variants", type: "checkbox", label: "Do products have variants?", options: ["Size", "Color", "Material", "Bundles", "Made to order", "No variants"] },
         { id: "s2_ecom_inventory", name: "Inventory management", type: "text", label: "Where is inventory managed today?" },
         { id: "s2_ecom_shipping", name: "Shipping & fulfillment", type: "textarea", label: "Shipping and fulfillment", help: "Who ships, from where, domestic or international, any 3PL, local pickup." },
@@ -219,7 +219,7 @@ const BRIEF_DATA = {
         {
           id: "s2_content_ready", name: "Content readiness", type: "radio", label: "Realistically, when can you have content ready?",
           help: "Honest answers here protect your timeline. Content is the single most common reason projects slip.",
-          options: ["It's ready now", "Within two weeks", "Within a month", "I'll need help with this — it's the part I'm worried about"],
+          options: ["It's ready now", "Within two weeks", "Within a month", "I'll need help with this, it's the part I'm worried about"],
         },
       ],
     },
@@ -247,12 +247,12 @@ const BRIEF_DATA = {
         },
         {
           id: "s2_platform_accounts", name: "Existing platform accounts", type: "checkbox", label: "Existing platform accounts",
-          help: "No login emails or usernames needed here — I'll ask for a collaborator invite once we're underway.",
+          help: "No login emails or usernames needed here. I'll ask for a collaborator invite once we're underway.",
           options: ["Shopify", "Webflow", "Squarespace", "WordPress", "Wix", "Custom build", "None"],
         },
         {
           id: "s2_platform_pref", name: "Platform preference", type: "radio", label: "Do you have a platform preference?",
-          options: ["Yes", "No — recommend what's right"],
+          options: ["Yes", "No, recommend what's right"],
           sub: [{ id: "s2_platform_pref_detail", name: "Platform preference detail", type: "text", label: "Which, and why?", showIf: "Platform preference:Yes" }],
         },
         {
@@ -272,7 +272,7 @@ const BRIEF_DATA = {
         { id: "s2_final_approval", name: "Final approval", type: "text", label: "Who has final approval?", help: "If it's more than one person, say who breaks a tie.", required: true },
         { id: "s2_other_voices", name: "Other stakeholders", type: "textarea", label: "Anyone else who'll weigh in?", help: "Optional." },
         { id: "s2_comm_pref", name: "Communication preference", type: "radio", label: "How do you prefer to communicate?", options: ["Email", "Scheduled calls", "Async video (Loom)", "Slack or text", "Mix"] },
-        { id: "s2_turnaround", name: "Feedback turnaround", type: "radio", label: "Realistic turnaround on feedback", options: ["Same day", "Within 2 days", "Within a week", "Longer — I'm slow, plan for it"] },
+        { id: "s2_turnaround", name: "Feedback turnaround", type: "radio", label: "Realistic turnaround on feedback", options: ["Same day", "Within 2 days", "Within a week", "Longer, I'm slow, plan for it"] },
         { id: "s2_hard_date", name: "Hard date", type: "date", label: "Any hard dates?", help: "Optional." },
         { id: "s2_hard_date_what", name: "What's happening on that date", type: "text", label: "What's happening on that date?", help: "Optional." },
         { id: "s2_work_style", name: "How you work", type: "textarea", label: "Anything about how you work I should know?", help: "Optional. You're visual and need to see it. You need to sit with things. You hate surprises." },

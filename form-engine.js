@@ -60,7 +60,7 @@ function renderOtherDetail(q) {
   if (!opt) return null;
   const id = `${q.id}_other_detail`;
   const wrap = el("div", { class: "field sub", "data-show-if": `${q.name}:${opt}` });
-  wrap.appendChild(el("label", { class: "q", for: id, text: `${opt} — feel free to type more (optional)` }));
+  wrap.appendChild(el("label", { class: "q", for: id, text: `${opt}: feel free to type more (optional)` }));
   wrap.appendChild(el("input", { type: "text", name: `${q.name} (${opt.toLowerCase()}, specify)`, id, placeholder: "Optional" }));
   return wrap;
 }
@@ -165,8 +165,8 @@ function wireConditionals(root) {
   evaluate();
 }
 
-// Builds a plain-text summary from the visible, filled-in fields —
-// grouping repeated keys (checkboxes) into one comma-joined line —
+// Builds a plain-text summary from the visible, filled-in fields,
+// grouping repeated keys (checkboxes) into one comma-joined line,
 // and skipping anything hidden by conditional logic.
 function exportText(formEl, title) {
   const seen = new Map(); // key -> array of values, in field order

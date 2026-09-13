@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------
-   Fabrice Bokovi — client intake forms
+   Fabrice Bokovi, client intake forms
    Tally-style: dark, single column, generous spacing.
 --------------------------------------------------------- */
 
@@ -188,6 +188,22 @@ footer{
   font-size:13px;
 }
 footer a{color:var(--text-dim)}
+
+/* landing page hub links */
+.hub-links{display:flex;flex-direction:column;gap:14px;padding:36px 0 60px}
+.hub-link{
+  display:block;
+  background:var(--panel);
+  border:1px solid var(--field-border);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  text-decoration:none;
+  color:var(--text);
+  transition:border-color .12s,background .12s;
+}
+.hub-link:hover{border-color:var(--accent-2);background:#1e2030}
+.hub-link .hub-title{font-size:17px;font-weight:600;margin:0 0 4px}
+.hub-link .hub-desc{font-size:14px;color:var(--text-dim);margin:0}
 
 @media (max-width:520px){
   .top{padding:40px 0 26px}

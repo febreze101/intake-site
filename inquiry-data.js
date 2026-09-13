@@ -10,7 +10,7 @@ const INQUIRY_DATA = {
         { id: "s1_website", name: "Current website", type: "url", label: "Current website (if any)" },
         {
           id: "s1_findyou", name: "Where to find you", type: "textarea", label: "Where else can I find you?",
-          help: "Instagram, LinkedIn, press, portfolio — anywhere that shows what you do.", required: true,
+          help: "Instagram, LinkedIn, press, portfolio, anywhere that shows what you do.", required: true,
         },
         {
           id: "s1_source", name: "How they heard about you", type: "radio", label: "How did you hear about me?",
@@ -39,8 +39,8 @@ const INQUIRY_DATA = {
         },
         {
           id: "s1_timeline", name: "Timeline", type: "radio", label: "Timeline",
-          options: ["ASAP — hard deadline", "1–2 months", "3–6 months", "Exploring, no fixed date"], required: true,
-          sub: [{ id: "s1_deadline", name: "Deadline detail", type: "text", label: "What's the deadline, and what's driving it?", showIf: "Timeline:ASAP — hard deadline" }],
+          options: ["ASAP, hard deadline", "1–2 months", "3–6 months", "Exploring, no fixed date"], required: true,
+          sub: [{ id: "s1_deadline", name: "Deadline detail", type: "text", label: "What's the deadline, and what's driving it?", showIf: "Timeline:ASAP, hard deadline" }],
         },
       ],
     },
@@ -50,7 +50,7 @@ const INQUIRY_DATA = {
         {
           id: "s1_budget", name: "Budget range", type: "radio", label: "Budget range for this project",
           help: "I ask up front so neither of us wastes time. If you're unsure, pick the last option and we'll talk it through.",
-          options: ["Under $5k", "$5k – $10k", "$10k – $20k", "$20k – $40k", "$40k+", "I don't know — help me understand what's realistic"], required: true,
+          options: ["Under $5k", "$5k – $10k", "$10k – $20k", "$20k – $40k", "$40k+", "I don't know, help me understand what's realistic"], required: true,
         },
         {
           id: "s1_decider", name: "Decision maker", type: "radio", label: "Who makes the final call on this project?",
