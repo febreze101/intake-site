@@ -50,6 +50,21 @@ function renderChoices(q, type) {
   return group;
 }
 
+// For any radio/checkbox/select question with an "Other" (or similarly
+// open-ended, e.g. "Equivalent") option, add an optional free-text field
+// that only shows once that option is selected.
+const OPEN_ENDED_OPTION = /^(other|equivalent)\b/i;
+
+function renderOtherDetail(q) {
+  const opt = (q.options || []).find(o => OPEN_ENDED_OPTION.test(o));
+  if (!opt) return null;
+  const id = `${q.id}_other_detail`;
+  const wrap = el("div", { class: "field sub", "data-show-if": `${q.name}:${opt}` });
+  wrap.appendChild(el("label", { class: "q", for: id, text: `${opt} — feel free to type more (optional)` }));
+  wrap.appendChild(el("input", { type: "text", name: `${q.name} (${opt.toLowerCase()}, specify)`, id, placeholder: "Optional" }));
+  return wrap;
+}
+
 function renderScale(q) {
   const wrap = el("div", {});
   const pairs = q.rows || [q.label];
@@ -101,6 +116,10 @@ function renderQuestion(q, isSub) {
   const wrap = fieldWrap(q, isSub);
   labelBlock(q).forEach(n => wrap.appendChild(n));
   wrap.appendChild(renderInput(q));
+  if (q.type === "radio" || q.type === "checkbox" || q.type === "select") {
+    const otherDetail = renderOtherDetail(q);
+    if (otherDetail) wrap.appendChild(otherDetail);
+  }
   if (q.sub) {
     q.sub.forEach(sq => wrap.appendChild(renderQuestion(sq, true)));
   }
