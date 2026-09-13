@@ -153,6 +153,18 @@ input:focus,textarea:focus,select:focus{
 .scale-opts input{position:absolute;opacity:0}
 .scale-opts label:has(input:checked){background:var(--accent-2);border-color:var(--accent-2);color:#fff}
 
+/* radar chart preview for multi-row scale questions */
+.scale-with-radar{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.scale-rows{flex:1 1 260px;min-width:220px}
+.radar-chart-wrap{flex:0 0 auto;width:220px;max-width:100%;margin:0 auto}
+.radar-chart{width:100%;height:auto;display:block;overflow:visible}
+.radar-ring{fill:none;stroke:var(--field-border);stroke-width:1}
+.radar-axis{stroke:var(--field-border);stroke-width:1}
+.radar-label{fill:var(--text-faint);font-size:9px}
+.radar-shape{fill:rgba(91,108,255,.28);stroke:var(--accent-2);stroke-width:2}
+.radar-dot{fill:var(--accent-2)}
+.radar-dot.hidden{display:none}
+
 /* file */
 input[type=file]{
   width:100%;margin-top:6px;padding:10px 12px;

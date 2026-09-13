@@ -65,21 +65,106 @@ function renderOtherDetail(q) {
   return wrap;
 }
 
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+function svgEl(tag, attrs = {}) {
+  const node = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  return node;
+}
+
+function radarPoint(cx, cy, r, angle) {
+  return [cx + r * Math.sin(angle), cy - r * Math.cos(angle)];
+}
+
+// A small live-updating radar chart used as a visual preview next to a
+// multi-row scale question, not as the input itself (the 1-5 rows are).
+function buildRadarChart(axisLabels) {
+  const size = 280;
+  const cx = size / 2, cy = size / 2;
+  const maxR = 78;
+  const n = axisLabels.length;
+  const svg = svgEl("svg", { viewBox: `0 0 ${size} ${size}`, class: "radar-chart" });
+
+  for (let ring = 1; ring <= 5; ring++) {
+    const r = (maxR * ring) / 5;
+    const pts = axisLabels.map((_, i) => radarPoint(cx, cy, r, (2 * Math.PI * i) / n).join(","));
+    svg.appendChild(svgEl("polygon", { points: pts.join(" "), class: "radar-ring" }));
+  }
+
+  axisLabels.forEach((label, i) => {
+    const angle = (2 * Math.PI * i) / n;
+    const [x, y] = radarPoint(cx, cy, maxR, angle);
+    svg.appendChild(svgEl("line", { x1: cx, y1: cy, x2: x, y2: y, class: "radar-axis" }));
+    const [lx, ly] = radarPoint(cx, cy, maxR + 18, angle);
+    const anchor = lx < cx - 2 ? "end" : lx > cx + 2 ? "start" : "middle";
+    const text = svgEl("text", { x: lx, y: ly, class: "radar-label", "text-anchor": anchor });
+    text.textContent = label;
+    svg.appendChild(text);
+  });
+
+  const shape = svgEl("polygon", { points: "", class: "radar-shape" });
+  svg.appendChild(shape);
+  const dots = axisLabels.map(() => {
+    const dot = svgEl("circle", { r: 3, class: "radar-dot hidden" });
+    svg.appendChild(dot);
+    return dot;
+  });
+
+  function update(values) {
+    const pts = values.map((v, i) => {
+      const angle = (2 * Math.PI * i) / n;
+      const r = v ? (maxR * v) / 5 : 0;
+      const [x, y] = radarPoint(cx, cy, r, angle);
+      dots[i].setAttribute("cx", x);
+      dots[i].setAttribute("cy", y);
+      dots[i].classList.toggle("hidden", !v);
+      return `${x},${y}`;
+    });
+    shape.setAttribute("points", pts.join(" "));
+  }
+
+  return { svg, update };
+}
+
 function renderScale(q) {
-  const wrap = el("div", {});
-  const pairs = q.rows || [q.label];
+  const isMulti = !!(q.rows && q.rows.length > 1);
+  const wrap = el("div", { class: isMulti ? "scale-with-radar" : "" });
+  const rowsWrap = el("div", { class: "scale-rows" });
+  const rowNames = [];
+
   (q.rows ? q.rows : [null]).forEach((row, ri) => {
     const rowWrap = el("div", { class: "scale-row" });
     if (row) rowWrap.appendChild(el("div", { class: "ends", html: row }));
     const opts = el("div", { class: "scale-opts" });
+    const name = `${q.name}${row ? `_${ri + 1}` : ""}`;
     for (let i = 1; i <= 5; i++) {
       const id = `${q.id}_${ri}_${i}`;
-      const input = el("input", { type: "radio", name: `${q.name}${row ? `_${ri + 1}` : ""}`, id, value: i });
+      const input = el("input", { type: "radio", name, id, value: i });
       opts.appendChild(el("label", { for: id }, [input, document.createTextNode(i)]));
     }
     rowWrap.appendChild(opts);
-    wrap.appendChild(rowWrap);
+    rowsWrap.appendChild(rowWrap);
+    if (row) rowNames.push(name);
   });
+  wrap.appendChild(rowsWrap);
+
+  if (isMulti) {
+    const axisLabels = q.rows.map(r => r.replace(/&harr;/g, "/").replace(/\s+/g, " ").trim());
+    const chart = buildRadarChart(axisLabels);
+    wrap.appendChild(el("div", { class: "radar-chart-wrap" }, [chart.svg]));
+
+    const redraw = () => {
+      const values = rowNames.map(name => {
+        const checked = rowsWrap.querySelector(`input[name="${name}"]:checked`);
+        return checked ? Number(checked.value) : null;
+      });
+      chart.update(values);
+    };
+    rowsWrap.addEventListener("change", redraw);
+    redraw();
+  }
+
   return wrap;
 }
 
