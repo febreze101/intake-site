@@ -228,7 +228,7 @@ function renderSection(sec, container) {
     secWrap.appendChild(el("div", { class: "note", html: sec.note }));
   }
   sec.questions.forEach(q => secWrap.appendChild(renderQuestion(q, false)));
-  container.appendChild(secWrap);
+  container.insertBefore(secWrap, container.querySelector(".actions"));
 }
 
 function wireConditionals(root) {
@@ -250,69 +250,9 @@ function wireConditionals(root) {
   evaluate();
 }
 
-// Builds a plain-text summary from the visible, filled-in fields,
-// grouping repeated keys (checkboxes) into one comma-joined line,
-// and skipping anything hidden by conditional logic.
-function exportText(formEl, title) {
-  const seen = new Map(); // key -> array of values, in field order
-  const order = [];
-  const fields = [...formEl.querySelectorAll("input, textarea, select")];
-
-  fields.forEach(f => {
-    const fieldWrap = f.closest(".field");
-    if (fieldWrap && fieldWrap.closest(".hidden")) return;
-    if (!f.name) return;
-
-    let key = f.name.endsWith("[]") ? f.name.slice(0, -2) : f.name;
-    let value;
-    if (f.type === "radio" || f.type === "checkbox") {
-      if (!f.checked) return;
-      value = f.value;
-    } else if (f.type === "file") {
-      value = f.files.length ? [...f.files].map(x => x.name).join(", ") : "";
-    } else {
-      value = f.value.trim();
-    }
-    if (value === "" || value === undefined) return;
-
-    if (!seen.has(key)) {
-      seen.set(key, []);
-      order.push(key);
-    }
-    seen.get(key).push(value);
-  });
-
-  const lines = [title, "Exported " + new Date().toLocaleString(), ""];
-  order.forEach(key => {
-    lines.push(key + ":");
-    lines.push(seen.get(key).join(", "));
-    lines.push("");
-  });
-  return lines.join("\n");
-}
-
-function slug(s) {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "response";
-}
-
-function downloadText(text, filename) {
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
-}
-
-function buildForm({ formEl, data, title, filenamePrefix, formspreeEndpoint }) {
+function buildForm({ formEl, data, formspreeEndpoint }) {
   data.sections.forEach(sec => renderSection(sec, formEl));
   wireConditionals(formEl);
-
-  let lastExport = "";
-  let lastFilename = "response.txt";
 
   formEl.addEventListener("submit", async e => {
     e.preventDefault();
@@ -321,43 +261,26 @@ function buildForm({ formEl, data, title, filenamePrefix, formspreeEndpoint }) {
     const submitBtn = formEl.querySelector('button[type="submit"]');
     const statusEl = formEl.querySelector(".status");
 
-    const nameField = formEl.querySelector('[name="Name"], [name="Business name"], [name="Who\'s filling this out"]');
-    const who = nameField && nameField.value ? slug(nameField.value) : "response";
-    lastExport = exportText(formEl, title || document.title);
-    lastFilename = `${filenamePrefix || "form"}-${who}-${new Date().toISOString().slice(0, 10)}.txt`;
+    submitBtn.disabled = true;
+    statusEl.textContent = "Sending…";
+    statusEl.classList.remove("err");
 
-    downloadText(lastExport, lastFilename);
+    try {
+      const res = await fetch(formspreeEndpoint, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(formEl),
+      });
+      if (!res.ok) throw new Error("Formspree request failed");
 
-    let emailFailed = false;
-    if (formspreeEndpoint) {
-      if (submitBtn) submitBtn.disabled = true;
-      if (statusEl) statusEl.textContent = "Sending…";
-      try {
-        const res = await fetch(formspreeEndpoint, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: new FormData(formEl),
-        });
-        emailFailed = !res.ok;
-      } catch {
-        emailFailed = true;
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-        if (statusEl) statusEl.textContent = "";
-      }
-    }
-
-    formEl.style.display = "none";
-    document.getElementById("success").style.display = "block";
-    const emailStatusEl = document.getElementById("email-status");
-    if (emailStatusEl) emailStatusEl.textContent = emailFailed
-      ? "Heads up: the automatic email didn't go through, so please attach and send the downloaded file as a backup."
-      : "";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    const again = document.getElementById("download-again");
-    if (again) {
-      again.onclick = () => downloadText(lastExport, lastFilename);
+      formEl.style.display = "none";
+      document.getElementById("success").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      statusEl.textContent = "Something went wrong sending that. Please try again, or email me directly.";
+      statusEl.classList.add("err");
+    } finally {
+      submitBtn.disabled = false;
     }
   });
 }

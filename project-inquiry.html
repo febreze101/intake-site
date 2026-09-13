@@ -26,9 +26,7 @@
 
   <div id="success">
     <h2>Got it, thanks.</h2>
-    <p>Your answers were sent over, and a copy also downloaded as a text file for your own records.</p>
-    <p id="email-status" style="margin-top:8px;color:var(--text-dim)"></p>
-    <p style="margin-top:18px"><button id="download-again" class="submit" type="button" style="background:transparent;border:1px solid var(--field-border);color:var(--text-dim)">Download again</button></p>
+    <p>Your answers were sent over. I'll follow up within two business days.</p>
   </div>
 </div>
 
@@ -42,8 +40,6 @@
   buildForm({
     formEl: document.getElementById("inquiry-form"),
     data: INQUIRY_DATA,
-    title: "Project Inquiry",
-    filenamePrefix: "project-inquiry",
     formspreeEndpoint: "https://formspree.io/f/xvkojwvg",
   });
 </script>

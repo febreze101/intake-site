@@ -15,7 +15,7 @@
   <p>Now the real work starts. This is the document we'll both come back to for the rest of the project. When I'm deciding what a page says, or which of two directions is more <em>you</em>, this is what I check.</p>
   <div class="note" style="margin-top:22px">
     <p>This version is trimmed down for a personal site or portfolio, so skip past the business-specific stuff. Some of it you may not have answers to yet, and that's useful information on its own. Write "not sure" and we'll work it out together.</p>
-    <p>When you submit, your answers are sent to me directly and also download as a text file on your own device. Budget 15 to 25 minutes.</p>
+    <p>When you submit, your answers are sent to me directly. Budget 15 to 25 minutes.</p>
   </div>
 </div>
 
@@ -23,16 +23,14 @@
   <form id="brief-form">
     <!-- questions injected by form-engine.js from BRIEF_DATA_PERSONAL -->
     <div class="actions">
-      <button type="submit" class="submit">Download my answers</button>
+      <button type="submit" class="submit">Send my answers</button>
       <span class="status"></span>
     </div>
   </form>
 
   <div id="success">
     <h2>That's everything.</h2>
-    <p>Your answers were sent over, and a copy also downloaded as a text file for your own records. I'll read through it properly before our next call.</p>
-    <p id="email-status" style="margin-top:8px;color:var(--text-dim)"></p>
-    <p style="margin-top:18px"><button id="download-again" class="submit" type="button" style="background:transparent;border:1px solid var(--field-border);color:var(--text-dim)">Download again</button></p>
+    <p>Your answers were sent over. I'll read through it properly before our next call.</p>
   </div>
 </div>
 
@@ -46,8 +44,6 @@
   buildForm({
     formEl: document.getElementById("brief-form"),
     data: BRIEF_DATA_PERSONAL,
-    title: "Strategy Brief (Personal Site)",
-    filenamePrefix: "strategy-brief-personal",
     formspreeEndpoint: "https://formspree.io/f/xvkojwvg",
   });
 </script>

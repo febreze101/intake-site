@@ -7,15 +7,13 @@ A landing page plus three forms:
 - **`strategy-brief-business.html`**: Strategy Brief for a business or brand. The deep adaptive questionnaire. Don't link it anywhere public, send the URL directly to a client once they've signed.
 - **`strategy-brief-personal.html`**: Strategy Brief for a personal site or portfolio. Same idea, trimmed down: no revenue, competition, or ecommerce questions. Same rule: send the URL directly, don't advertise it.
 
-On submit, each form validates required fields, generates a plain-text
-summary of the answers, and downloads it straight to the visitor's device as a
-`.txt` file (e.g. `project-inquiry-jane-doe-2026-09-13.txt`) as a backup copy.
-The answers are also POSTed to a **Formspree** endpoint (configured via
-`formspreeEndpoint` in each HTML file's `buildForm()` call), which emails them
-to you directly. No third-party account is needed on the client's end, and no
-custom backend to run. If that request fails for any reason (offline,
-Formspree down), the success screen tells the visitor to send the downloaded
-file as a fallback.
+On submit, each form validates required fields, then POSTs the answers
+straight to a **Formspree** endpoint (configured via `formspreeEndpoint` in
+each HTML file's `buildForm()` call), which emails them to you directly. No
+third-party account is needed on the client's end, and no custom backend to
+run. If that request fails for any reason (offline, Formspree down), the
+visitor sees an error and stays on the form so they can retry, nothing is
+lost silently.
 
 ## Files
 
@@ -25,7 +23,7 @@ project-inquiry.html         Project Inquiry page
 strategy-brief-business.html Strategy Brief page, business version
 strategy-brief-personal.html Strategy Brief page, personal site / portfolio version
 style.css                    Shared look (dark, Tally-style)
-form-engine.js                Renders questions from data + handles the download
+form-engine.js                Renders questions from data + handles submission
 inquiry-data.js               The Project Inquiry question set
 brief-data-business.js        The business Strategy Brief question set, with conditional sections
 brief-data-personal.js        The personal site Strategy Brief question set, with conditional sections
